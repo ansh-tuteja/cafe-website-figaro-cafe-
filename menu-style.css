@@ -1,0 +1,105 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.navbar{
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+.container-fluid{
+
+    margin-top: 0;
+    background-color:black;
+    height: 110px;
+    
+}
+.logo{
+    border-radius: 50px;
+    border: 2px solid #CCA43D;
+   
+}
+.logo:hover{
+    height: 82px;
+    width: 82px;
+}
+.navbar-brand{
+    font-family: papyrus;
+    color: wheat;
+}
+.navbar-brand:hover{
+    color: wheat;
+    
+}
+.nav-link,.nav-link:hover{
+    color:#CCA43D;
+    font-family:'Times New Roman', Times, serif;
+}
+.btn-outline-success{
+    background-color: #CCA43D;
+    color: black;
+    border: 1px solid #CCA43D;
+    border-radius: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+}
+.btn-outline-success:hover{
+    width: 79.05px;
+    height: 40px;
+    background-color: #CCA43D;
+    color: black;
+    border: 1px solid #CCA43D;
+    border-radius: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+}
+.form-control{
+    border-radius:20px ;
+}
+.full-div{
+    background-color: black;
+    height: 1000px;
+    width: auto;
+    
+}
+.img{
+    border-radius: 20px;
+    margin: 40px;
+}
+.coffee{
+
+    color: #CCA43D;
+    margin-left:85px ;
+    text-align:left;
+    font-size: xxx-large;
+    font-family: fantasy;
+    text-decoration: underline;
+}
+.menu-div{
+    
+    margin-left: 40px;
+    max-width: 1300px;
+}
+.img-div{
+display: inline;
+}
+
+.img:hover{
+    box-shadow: 10px 10px 50px -6px #CCA43D, 2px 2px 5px white ;
+}
+
+.name{
+    display: inline;
+    color: black;
+    border: 2px solid #CCA43D;
+    background-color: #CCA43D;
+    height: 500px;
+    margin-left: 140px;
+    text-align: center;
+    padding-top: 5px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: x-large;
+    
+    
+}
