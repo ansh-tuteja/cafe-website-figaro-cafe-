@@ -32,8 +32,8 @@
     padding: 40px 20px;
     position: sticky;
     top: 88px;
-    z-index: 100;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 500;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .category-tabs {
@@ -67,7 +67,7 @@
 /* Menu Section */
 .menu-section {
     padding: 80px 40px;
-    background-color: #F5F1E8;
+    background-color: #FFF8F0;
 }
 
 .menu-grid {
@@ -148,7 +148,7 @@
 }
 
 .add-to-cart:hover {
-    background-color: #8B7355;
+    background-color: #B8905F;
     color: #FFFFFF;
     transform: scale(1.1);
 }
@@ -179,7 +179,7 @@
 .price {
     font-size: 24px;
     font-weight: 700;
-    color: #8B7355;
+    color: #B8905F;
 }
 
 .badge {
@@ -278,7 +278,7 @@
 }
 
 .cart-item-info p {
-    color: #8B7355;
+    color: #B8905F;
     font-weight: 600;
 }
 
@@ -313,7 +313,7 @@
 .checkout-btn {
     width: 100%;
     padding: 15px;
-    background-color: #8B7355;
+    background-color: #B8905F;
     color: #FFFFFF;
     border: none;
     border-radius: 8px;
@@ -335,7 +335,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #8B7355;
+    background-color: #B8905F;
     color: #FFFFFF;
     border: none;
     font-size: 24px;
@@ -600,7 +600,7 @@
 }
 
 .menu-item:hover .item-price {
-    color: #8B7355;
+    color: #B8905F;
     transform: scale(1.1);
     font-weight: 600;
 }

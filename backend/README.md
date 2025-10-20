@@ -1,6 +1,6 @@
 # Figaro Cafe Backend
 
-Backend server for Figaro Cafe website with MongoDB database.
+Backend server for Figaro Cafe website with MongoDB database and full cart functionality.
 
 ## Setup Instructions
 
@@ -16,10 +16,19 @@ Download and install MongoDB from: https://www.mongodb.com/try/download/communit
 Or use MongoDB Atlas (cloud): https://www.mongodb.com/cloud/atlas
 
 ### 3. Configure Environment
-Edit `.env` file with your settings:
-- MongoDB connection string
-- Email credentials (for sending confirmations)
-- JWT secret key
+Create a `.env` file (copy from `.env.example`):
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your settings:
+```env
+MONGODB_URI=mongodb://localhost:27017/figaro-cafe
+PORT=3000
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-app-password
+JWT_SECRET=your-secret-key
+```
 
 ### 4. Start the Server
 
@@ -37,6 +46,17 @@ Server will run on: http://localhost:3000
 
 ## API Endpoints
 
+### Cart Management
+- `GET /api/cart/:sessionId` - Get cart (creates if doesn't exist)
+- `POST /api/cart/add` - Add item to cart (auto-increments quantity if exists)
+- `PUT /api/cart/update` - Update item quantity
+- `DELETE /api/cart/remove` - Remove specific item
+- `DELETE /api/cart/clear/:sessionId` - Clear entire cart
+
+### Order Management
+- `POST /api/orders` - Create order (auto-clears cart)
+- `GET /api/orders` - Get all orders (sorted by date)
+
 ### Reservations
 - `POST /api/reservations` - Create new reservation
 - `GET /api/reservations` - Get all reservations
@@ -47,6 +67,7 @@ Server will run on: http://localhost:3000
 ### Authentication
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - User login
+
 
 ### Contact
 - `POST /api/contact` - Submit contact form

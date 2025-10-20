@@ -6,11 +6,11 @@
 }
 
 :root {
-    --primary-bg: #F5F1E8;
+    --primary-bg: #FFF8F0;
     --primary-text: #2C2C2C;
     --accent-color: #1A1A1A;
     --border-color: #D4C5B0;
-    --hover-color: #8B7355;
+    --hover-color: #B8905F;
     --white: #FFFFFF;
     --gray-light: #F8F8F8;
     --gray-medium: #999;
@@ -230,6 +230,46 @@ body {
 
 .form-group input::placeholder {
     color: #CCC;
+}
+
+/* ==================== PASSWORD TOGGLE ==================== */
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 45px; /* Make room for the toggle button */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--gray-medium);
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+    font-size: 16px;
+}
+
+.toggle-password:hover {
+    color: var(--hover-color);
+}
+
+.toggle-password:focus {
+    outline: none;
+}
+
+.toggle-password i {
+    pointer-events: none;
 }
 
 /* ==================== FORM OPTIONS ==================== */

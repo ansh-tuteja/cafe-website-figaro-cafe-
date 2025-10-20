@@ -14,6 +14,7 @@
     
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/menu-page.css">
+    <link rel="stylesheet" href="../css/cart.css">
     <link rel="stylesheet" href="../css/animations.css">
 </head>
 <body>
@@ -42,6 +43,10 @@
             </div>
             
             <div class="nav-right">
+                <div class="cart-icon-wrapper" onclick="toggleCartModal()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" style="display: none;">0</span>
+                </div>
                 <a href="auth.html" class="nav-link"><i class="fas fa-user"></i> Login</a>
                 <a href="reservation.html" class="reservation-btn">Reservation</a>
             </div>
@@ -74,7 +79,7 @@
             <div class="menu-item" data-category="coffee">
                 <div class="item-image">
                     <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80" alt="Espresso">
-                    <button class="add-to-cart" onclick="addToCart('Espresso', 180)">
+                    <button class="add-to-cart" onclick="addToCart('Espresso', 180, 'coffee', 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -91,7 +96,7 @@
             <div class="menu-item" data-category="coffee">
                 <div class="item-image">
                     <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80" alt="Cappuccino">
-                    <button class="add-to-cart" onclick="addToCart('Cappuccino', 220)">
+                    <button class="add-to-cart" onclick="addToCart('Cappuccino', 220, 'coffee', 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -410,7 +415,40 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-modal-header">
+            <h2><i class="fas fa-shopping-cart"></i> Your Cart</h2>
+            <button class="close-cart" onclick="toggleCartModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="cart-modal-body">
+            <div class="cart-items" id="cart-items">
+                <p class="empty-cart">Your cart is empty</p>
+            </div>
+        </div>
+        
+        <div class="cart-modal-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="modal-cart-total">₹0</span>
+            </div>
+            <div class="cart-actions">
+                <button class="cart-btn clear-cart-btn" onclick="cartManager.clearCart()">
+                    Clear Cart
+                </button>
+                <button class="cart-btn checkout-btn" onclick="checkout()">
+                    Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="cart-modal-overlay" onclick="toggleCartModal()"></div>
+
     <script src="../js/animations.js"></script>
+    <script src="../js/cart.js"></script>
     <script src="../js/menu.js"></script>
 </body>
 </html>

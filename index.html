@@ -47,10 +47,55 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section image-zoom">
-        <div class="hero-image fade-in">
-            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&q=80" alt="Figaro Cafe Experience">
+    <!-- Hero Carousel Section -->
+    <section class="hero-carousel">
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <div class="carousel-slide active">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&q=80" alt="Cozy Cafe Interior">
+                    <div class="carousel-caption">
+                        <h2 class="fade-in-up">Welcome to Figaro Cafe</h2>
+                        <p class="fade-in-up delay-200">Better days being in Figaro</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1600&q=80" alt="Artisan Coffee">
+                    <div class="carousel-caption">
+                        <h2 class="fade-in-up">Artisan Coffee</h2>
+                        <p class="fade-in-up delay-200">Crafted with passion & precision</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1600&q=80" alt="Fresh Bakery">
+                    <div class="carousel-caption">
+                        <h2 class="fade-in-up">Fresh Bakery</h2>
+                        <p class="fade-in-up delay-200">Baked daily with love</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=1600&q=80" alt="Gourmet Dining">
+                    <div class="carousel-caption">
+                        <h2 class="fade-in-up">Gourmet Experience</h2>
+                        <p class="fade-in-up delay-200">Savor every moment</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Arrows -->
+            <button class="carousel-btn prev" aria-label="Previous slide">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-btn next" aria-label="Next slide">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <!-- Dots Navigation -->
+            <div class="carousel-dots">
+                <button class="dot active" data-slide="0" aria-label="Slide 1"></button>
+                <button class="dot" data-slide="1" aria-label="Slide 2"></button>
+                <button class="dot" data-slide="2" aria-label="Slide 3"></button>
+                <button class="dot" data-slide="3" aria-label="Slide 4"></button>
+            </div>
         </div>
     </section>
 
@@ -177,8 +222,8 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- Animation Scripts -->
+    <!-- Scripts -->
+    <script src="js/carousel.js"></script>
     <script src="js/animations.js"></script>
 </body>
-</html>
 </html>

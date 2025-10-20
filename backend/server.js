@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('../')); // Serve static files
 
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/figaro-cafe';
@@ -21,7 +22,42 @@ mongoose.connect(MONGODB_URI, {
 .then(() => console.log('✅ MongoDB Connected Successfully'))
 .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
-// Schemas
+// ==================== SCHEMAS ====================
+
+// Cart Item Schema
+const cartItemSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    sessionId: { type: String }, // For guest users
+    items: [{
+        name: { type: String, required: true },
+        price: { type: Number, required: true },
+        quantity: { type: Number, required: true, default: 1 },
+        category: { type: String },
+        image: { type: String },
+        addedAt: { type: Date, default: Date.now }
+    }],
+    updatedAt: { type: Date, default: Date.now }
+});
+
+// Order Schema
+const orderSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    items: [{
+        name: { type: String, required: true },
+        price: { type: Number, required: true },
+        quantity: { type: Number, required: true }
+    }],
+    totalAmount: { type: Number, required: true },
+    customerInfo: {
+        name: { type: String, required: true },
+        email: { type: String, required: true },
+        phone: { type: String, required: true },
+        address: { type: String }
+    },
+    status: { type: String, default: 'pending', enum: ['pending', 'confirmed', 'preparing', 'ready', 'delivered', 'cancelled'] },
+    paymentStatus: { type: String, default: 'pending', enum: ['pending', 'paid', 'failed'] },
+    orderDate: { type: Date, default: Date.now }
+});
 const reservationSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
@@ -55,8 +91,152 @@ const contactSchema = new mongoose.Schema({
 const Reservation = mongoose.model('Reservation', reservationSchema);
 const User = mongoose.model('User', userSchema);
 const Contact = mongoose.model('Contact', contactSchema);
+const Cart = mongoose.model('Cart', cartItemSchema);
+const Order = mongoose.model('Order', orderSchema);
 
-// ==================== ROUTES ====================
+// ==================== CART ROUTES ====================
+
+// Get Cart
+app.get('/api/cart/:sessionId', async (req, res) => {
+    try {
+        let cart = await Cart.findOne({ sessionId: req.params.sessionId });
+        if (!cart) {
+            cart = new Cart({ sessionId: req.params.sessionId, items: [] });
+            await cart.save();
+        }
+        res.json({ success: true, cart });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Add to Cart
+app.post('/api/cart/add', async (req, res) => {
+    try {
+        const { sessionId, item } = req.body;
+        
+        let cart = await Cart.findOne({ sessionId });
+        
+        if (!cart) {
+            cart = new Cart({ sessionId, items: [item] });
+        } else {
+            // Check if item already exists
+            const existingItemIndex = cart.items.findIndex(i => i.name === item.name);
+            
+            if (existingItemIndex > -1) {
+                // Item exists, increase quantity
+                cart.items[existingItemIndex].quantity += 1;
+            } else {
+                // New item
+                cart.items.push(item);
+            }
+        }
+        
+        cart.updatedAt = new Date();
+        await cart.save();
+        
+        res.json({ success: true, cart });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Update Cart Item Quantity
+app.put('/api/cart/update', async (req, res) => {
+    try {
+        const { sessionId, itemName, quantity } = req.body;
+        
+        const cart = await Cart.findOne({ sessionId });
+        if (!cart) {
+            return res.status(404).json({ success: false, message: 'Cart not found' });
+        }
+        
+        const itemIndex = cart.items.findIndex(i => i.name === itemName);
+        if (itemIndex > -1) {
+            if (quantity <= 0) {
+                // Remove item if quantity is 0 or less
+                cart.items.splice(itemIndex, 1);
+            } else {
+                cart.items[itemIndex].quantity = quantity;
+            }
+            cart.updatedAt = new Date();
+            await cart.save();
+        }
+        
+        res.json({ success: true, cart });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Remove from Cart
+app.delete('/api/cart/remove', async (req, res) => {
+    try {
+        const { sessionId, itemName } = req.body;
+        
+        const cart = await Cart.findOne({ sessionId });
+        if (!cart) {
+            return res.status(404).json({ success: false, message: 'Cart not found' });
+        }
+        
+        cart.items = cart.items.filter(i => i.name !== itemName);
+        cart.updatedAt = new Date();
+        await cart.save();
+        
+        res.json({ success: true, cart });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Clear Cart
+app.delete('/api/cart/clear/:sessionId', async (req, res) => {
+    try {
+        const cart = await Cart.findOne({ sessionId: req.params.sessionId });
+        if (cart) {
+            cart.items = [];
+            cart.updatedAt = new Date();
+            await cart.save();
+        }
+        res.json({ success: true, cart });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ==================== ORDER ROUTES ====================
+
+// Create Order
+app.post('/api/orders', async (req, res) => {
+    try {
+        const order = new Order(req.body);
+        await order.save();
+        
+        // Clear cart after order
+        if (req.body.sessionId) {
+            await Cart.findOneAndUpdate(
+                { sessionId: req.body.sessionId },
+                { items: [], updatedAt: new Date() }
+            );
+        }
+        
+        res.json({ success: true, order });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Get Orders
+app.get('/api/orders', async (req, res) => {
+    try {
+        const orders = await Order.find().sort({ orderDate: -1 });
+        res.json({ success: true, orders });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ==================== EXISTING ROUTES ====================
 
 // Health Check
 app.get('/', (req, res) => {

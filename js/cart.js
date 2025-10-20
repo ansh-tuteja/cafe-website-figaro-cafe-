@@ -1,0 +1,327 @@
+// Cart Management System
+class CartManager {
+    constructor() {
+        this.sessionId = this.getOrCreateSessionId();
+        this.cart = { items: [] };
+        this.API_BASE = 'http://localhost:3000/api';
+        this.init();
+    }
+
+    // Generate or retrieve session ID
+    getOrCreateSessionId() {
+        let sessionId = localStorage.getItem('figaro_session_id');
+        if (!sessionId) {
+            sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('figaro_session_id', sessionId);
+        }
+        return sessionId;
+    }
+
+    // Initialize cart
+    async init() {
+        await this.loadCart();
+        this.updateCartUI();
+    }
+
+    // Load cart from server
+    async loadCart() {
+        try {
+            const response = await fetch(`${this.API_BASE}/cart/${this.sessionId}`);
+            const data = await response.json();
+            if (data.success) {
+                this.cart = data.cart;
+            }
+        } catch (error) {
+            console.error('Error loading cart:', error);
+            // Fallback to localStorage
+            const savedCart = localStorage.getItem('figaro_cart');
+            if (savedCart) {
+                this.cart = JSON.parse(savedCart);
+            }
+        }
+    }
+
+    // Add item to cart
+    async addToCart(itemName, price, category = 'general', image = '') {
+        const item = {
+            name: itemName,
+            price: price,
+            quantity: 1,
+            category: category,
+            image: image
+        };
+
+        try {
+            const response = await fetch(`${this.API_BASE}/cart/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sessionId: this.sessionId,
+                    item: item
+                })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                this.cart = data.cart;
+                this.updateCartUI();
+                this.showNotification(`${itemName} added to cart!`, 'success');
+                localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+            }
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+            this.addToCartLocally(item);
+        }
+    }
+
+    // Fallback: Add to cart locally
+    addToCartLocally(item) {
+        const existingItemIndex = this.cart.items.findIndex(i => i.name === item.name);
+        
+        if (existingItemIndex > -1) {
+            this.cart.items[existingItemIndex].quantity += 1;
+        } else {
+            this.cart.items.push(item);
+        }
+        
+        localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+        this.updateCartUI();
+        this.showNotification(`${item.name} added to cart!`, 'success');
+    }
+
+    // Update item quantity
+    async updateQuantity(itemName, change) {
+        const itemIndex = this.cart.items.findIndex(i => i.name === itemName);
+        if (itemIndex === -1) return;
+
+        const newQuantity = this.cart.items[itemIndex].quantity + change;
+
+        try {
+            const response = await fetch(`${this.API_BASE}/cart/update`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sessionId: this.sessionId,
+                    itemName: itemName,
+                    quantity: newQuantity
+                })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                this.cart = data.cart;
+                this.updateCartUI();
+                localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+            }
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+            this.updateQuantityLocally(itemName, change);
+        }
+    }
+
+    // Fallback: Update quantity locally
+    updateQuantityLocally(itemName, change) {
+        const itemIndex = this.cart.items.findIndex(i => i.name === itemName);
+        if (itemIndex === -1) return;
+
+        this.cart.items[itemIndex].quantity += change;
+        
+        if (this.cart.items[itemIndex].quantity <= 0) {
+            this.cart.items.splice(itemIndex, 1);
+        }
+        
+        localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+        this.updateCartUI();
+    }
+
+    // Remove item from cart
+    async removeItem(itemName) {
+        try {
+            const response = await fetch(`${this.API_BASE}/cart/remove`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sessionId: this.sessionId,
+                    itemName: itemName
+                })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                this.cart = data.cart;
+                this.updateCartUI();
+                this.showNotification(`${itemName} removed from cart`, 'info');
+                localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+            }
+        } catch (error) {
+            console.error('Error removing item:', error);
+            this.removeItemLocally(itemName);
+        }
+    }
+
+    // Fallback: Remove item locally
+    removeItemLocally(itemName) {
+        this.cart.items = this.cart.items.filter(i => i.name !== itemName);
+        localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+        this.updateCartUI();
+        this.showNotification(`${itemName} removed from cart`, 'info');
+    }
+
+    // Clear entire cart
+    async clearCart() {
+        try {
+            const response = await fetch(`${this.API_BASE}/cart/clear/${this.sessionId}`, {
+                method: 'DELETE'
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                this.cart = data.cart;
+                this.updateCartUI();
+                this.showNotification('Cart cleared', 'info');
+                localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+            }
+        } catch (error) {
+            console.error('Error clearing cart:', error);
+            this.cart.items = [];
+            localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+            this.updateCartUI();
+        }
+    }
+
+    // Calculate total
+    getTotal() {
+        return this.cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    }
+
+    // Get item count
+    getItemCount() {
+        return this.cart.items.reduce((count, item) => count + item.quantity, 0);
+    }
+
+    // Update cart UI
+    updateCartUI() {
+        const cartCount = document.getElementById('cart-count');
+        const cartTotal = document.getElementById('cart-total');
+        
+        if (cartCount) {
+            const count = this.getItemCount();
+            cartCount.textContent = count;
+            cartCount.style.display = count > 0 ? 'flex' : 'none';
+        }
+
+        if (cartTotal) {
+            cartTotal.textContent = `₹${this.getTotal()}`;
+        }
+
+        // Update cart modal if open
+        this.updateCartModal();
+    }
+
+    // Update cart modal content
+    updateCartModal() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        if (!cartItemsContainer) return;
+
+        if (this.cart.items.length === 0) {
+            cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+            return;
+        }
+
+        cartItemsContainer.innerHTML = this.cart.items.map(item => `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <p class="cart-item-price">₹${item.price} × ${item.quantity}</p>
+                </div>
+                <div class="cart-item-controls">
+                    <button class="qty-btn" onclick="cartManager.updateQuantity('${item.name}', -1)">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <span class="qty-display">${item.quantity}</span>
+                    <button class="qty-btn" onclick="cartManager.updateQuantity('${item.name}', 1)">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="remove-btn" onclick="cartManager.removeItem('${item.name}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        const modalTotal = document.getElementById('modal-cart-total');
+        if (modalTotal) {
+            modalTotal.textContent = `₹${this.getTotal()}`;
+        }
+    }
+
+    // Show notification
+    showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `cart-notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    // Place order
+    async placeOrder(customerInfo) {
+        if (this.cart.items.length === 0) {
+            this.showNotification('Your cart is empty!', 'error');
+            return false;
+        }
+
+        try {
+            const response = await fetch(`${this.API_BASE}/orders`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sessionId: this.sessionId,
+                    items: this.cart.items,
+                    totalAmount: this.getTotal(),
+                    customerInfo: customerInfo
+                })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                this.cart.items = [];
+                this.updateCartUI();
+                localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+                this.showNotification('Order placed successfully!', 'success');
+                return true;
+            }
+        } catch (error) {
+            console.error('Error placing order:', error);
+            this.showNotification('Error placing order. Please try again.', 'error');
+            return false;
+        }
+    }
+}
+
+// Initialize cart manager
+const cartManager = new CartManager();
+
+// Global function for easy access from HTML
+function addToCart(itemName, price, category, image) {
+    cartManager.addToCart(itemName, price, category, image);
+}
+
+// Toggle cart modal
+function toggleCartModal() {
+    const modal = document.getElementById('cart-modal');
+    if (modal) {
+        modal.classList.toggle('active');
+        if (modal.classList.contains('active')) {
+            cartManager.updateCartModal();
+        }
+    }
+}
