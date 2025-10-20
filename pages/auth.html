@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - Figaro Cafe</title>
+    <link rel="shortcut icon" href="../assets/logo.svg" type="image/x-icon">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="auth-nav">
+        <a href="../index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+        <div class="logo-small">
+            <img src="../assets/logo.svg" alt="Figaro Logo" class="logo-image" style="width: 40px; height: 40px;">
+            <span>FIGARO CAFÉ</span>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="auth-container">
+        <!-- Left Side - Image -->
+        <div class="auth-image">
+            <div class="overlay">
+                <h1 class="welcome-text">Welcome to Figaro</h1>
+                <p class="tagline">Better days being in Figaro</p>
+            </div>
+        </div>
+
+        <!-- Right Side - Form -->
+        <div class="auth-form-container">
+            <div class="form-wrapper">
+                <!-- Toggle Buttons -->
+                <div class="form-toggle">
+                    <button class="toggle-btn active" id="loginToggle">Login</button>
+                    <button class="toggle-btn" id="signupToggle">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form class="auth-form active" id="loginForm">
+                    <h2>Welcome Back!</h2>
+                    <p class="form-subtitle">Please enter your details to continue</p>
+
+                    <div class="form-group">
+                        <label for="loginEmail">
+                            <i class="fas fa-envelope"></i> Email Address
+                        </label>
+                        <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+
+                <!-- Sign Up Form -->
+                <form class="auth-form" id="signupForm">
+                    <h2>Create Account</h2>
+                    <p class="form-subtitle">Join the Figaro Cafe family today</p>
+
+                    <div class="form-group">
+                        <label for="signupName">
+                            <i class="fas fa-user"></i> Full Name
+                        </label>
+                        <input type="text" id="signupName" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupEmail">
+                            <i class="fas fa-envelope"></i> Email Address
+                        </label>
+                        <input type="email" id="signupEmail" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPhone">
+                            <i class="fas fa-phone"></i> Phone Number
+                        </label>
+                        <input type="tel" id="signupPhone" placeholder="+91 98765 43210" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPassword">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <input type="password" id="signupPassword" placeholder="Create a password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupConfirmPassword">
+                            <i class="fas fa-lock"></i> Confirm Password
+                        </label>
+                        <input type="password" id="signupConfirmPassword" placeholder="Confirm your password" required>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" required> I agree to <a href="#" class="terms-link">Terms & Conditions</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/919875999500" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="auth-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <a href="tel:09875999500" class="footer-phone">098759 99500</a>
+                <a href="mailto:admin@figarocafe.com" class="footer-email">admin@figarocafe.com</a>
+            </div>
+            
+            <div class="footer-center">
+                <div class="footer-logo">
+                    <img src="../assets/logo.svg" alt="Figaro Logo" class="footer-logo-img" style="width: 60px; height: 60px;">
+                    <div class="logo-text">
+                        <h2>FIGARO</h2>
+                        <p>CAFÉ</p>
+                    </div>
+                </div>
+                <p class="footer-tagline">Better days being in Figaro</p>
+            </div>
+            
+            <div class="footer-right">
+                <a href="../index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="menu.html">Menu</a>
+                <a href="reservation.html">Order</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Copyright © 2024 Gourmet House Private Limited</p>
+            <p>All rights reserved Figaro cafe</p>
+        </div>
+    </footer>
+
+    <script src="../js/animations.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>
