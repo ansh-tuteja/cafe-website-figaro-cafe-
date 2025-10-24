@@ -30,9 +30,6 @@
 .menu-categories {
     background-color: #FFFFFF;
     padding: 40px 20px;
-    position: sticky;
-    top: 88px;
-    z-index: 500;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 

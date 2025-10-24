@@ -1,22 +1,33 @@
-// Category Filter
-const tabBtns = document.querySelectorAll('.tab-btn');
-const menuItems = document.querySelectorAll('.menu-item');
+// Category Filter - Wait for DOM to load
+document.addEventListener('DOMContentLoaded', () => {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const menuItems = document.querySelectorAll('.menu-item');
 
-tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Remove active class from all buttons
-        tabBtns.forEach(b => b.classList.remove('active'));
-        // Add active class to clicked button
-        btn.classList.add('active');
-        
-        const category = btn.dataset.category;
-        
-        menuItems.forEach(item => {
-            if (category === 'all' || item.dataset.category === category) {
-                item.classList.remove('hidden');
-            } else {
-                item.classList.add('hidden');
-            }
+    // Show all items on page load
+    menuItems.forEach(item => {
+        item.classList.remove('hidden');
+        item.style.display = '';
+    });
+
+    // Add click listeners to filter buttons
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            tabBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            const category = btn.dataset.category;
+            
+            menuItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.classList.remove('hidden');
+                    item.style.display = '';
+                } else {
+                    item.classList.add('hidden');
+                    item.style.display = 'none';
+                }
+            });
         });
     });
 });

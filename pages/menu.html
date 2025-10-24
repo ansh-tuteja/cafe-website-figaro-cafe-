@@ -78,8 +78,8 @@
             <!-- Coffee Items -->
             <div class="menu-item" data-category="coffee">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80" alt="Espresso">
-                    <button class="add-to-cart" onclick="addToCart('Espresso', 180, 'coffee', 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80')">
+                    <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400&q=80" alt="Espresso">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Espresso', 180, 'coffee')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -95,8 +95,8 @@
 
             <div class="menu-item" data-category="coffee">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80" alt="Cappuccino">
-                    <button class="add-to-cart" onclick="addToCart('Cappuccino', 220, 'coffee', 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80')">
+                    <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&q=80" alt="Cappuccino">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Cappuccino', 220, 'coffee')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -112,8 +112,8 @@
 
             <div class="menu-item" data-category="coffee">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=80" alt="Latte">
-                    <button class="add-to-cart" onclick="addToCart('Caffe Latte', 240)">
+                    <img src="https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=400&q=80" alt="Latte">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Caffe Latte', 240, 'coffee')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -130,7 +130,7 @@
             <div class="menu-item" data-category="coffee">
                 <div class="item-image">
                     <img src="https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=400&q=80" alt="Mocha">
-                    <button class="add-to-cart" onclick="addToCart('Mocha', 260)">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Mocha', 260, 'coffee')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -144,11 +144,113 @@
                 </div>
             </div>
 
+            <div class="menu-item" data-category="coffee">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80" alt="Flat White">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Flat White', 250, 'coffee')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Flat White</h3>
+                    <p>Velvety microfoam coffee</p>
+                    <div class="item-footer">
+                        <span class="price">₹250</span>
+                        <span class="badge hot">Hot</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="coffee">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&q=80" alt="Macchiato">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Macchiato', 200, 'coffee')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Macchiato</h3>
+                    <p>Espresso marked with foam</p>
+                    <div class="item-footer">
+                        <span class="price">₹200</span>
+                        <span class="badge hot">Hot</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="coffee">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=400&q=80" alt="Americano">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Americano', 190, 'coffee')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Americano</h3>
+                    <p>Espresso with hot water</p>
+                    <div class="item-footer">
+                        <span class="price">₹190</span>
+                        <span class="badge hot">Hot</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="coffee">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&q=80" alt="Affogato">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Affogato', 280, 'coffee')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Affogato</h3>
+                    <p>Espresso over vanilla ice cream</p>
+                    <div class="item-footer">
+                        <span class="price">₹280</span>
+                        <span class="badge cold">Cold</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="coffee">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=400&q=80" alt="Caramel Macchiato">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Caramel Macchiato', 290, 'coffee')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Caramel Macchiato</h3>
+                    <p>Sweet caramel coffee blend</p>
+                    <div class="item-footer">
+                        <span class="price">₹290</span>
+                        <span class="badge hot">Hot</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="coffee">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80" alt="Ristretto">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Ristretto', 170, 'coffee')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Ristretto</h3>
+                    <p>Short concentrated espresso</p>
+                    <div class="item-footer">
+                        <span class="price">₹170</span>
+                        <span class="badge hot">Hot</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Beverages -->
             <div class="menu-item" data-category="beverages">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80" alt="Iced Coffee">
-                    <button class="add-to-cart" onclick="addToCart('Iced Coffee', 230)">
+                    <img src="https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=400&q=80" alt="Iced Coffee">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Iced Coffee', 230, 'beverages')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -164,8 +266,25 @@
 
             <div class="menu-item" data-category="beverages">
                 <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80" alt="Cold Brew">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Cold Brew', 250, 'beverages')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Cold Brew</h3>
+                    <p>Smooth 24-hour cold extraction</p>
+                    <div class="item-footer">
+                        <span class="price">₹250</span>
+                        <span class="badge cold">Cold</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="beverages">
+                <div class="item-image">
                     <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80" alt="Green Tea">
-                    <button class="add-to-cart" onclick="addToCart('Green Tea', 150)">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Green Tea', 150, 'beverages')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -181,8 +300,42 @@
 
             <div class="menu-item" data-category="beverages">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1546173159-315724a31696?w=400&q=80" alt="Fresh Juice">
-                    <button class="add-to-cart" onclick="addToCart('Fresh Orange Juice', 180)">
+                    <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&q=80" alt="Masala Chai">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Masala Chai', 120, 'beverages')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Masala Chai</h3>
+                    <p>Traditional spiced tea</p>
+                    <div class="item-footer">
+                        <span class="price">₹120</span>
+                        <span class="badge hot">Hot</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="beverages">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&q=80" alt="Hot Chocolate">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Hot Chocolate', 180, 'beverages')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Hot Chocolate</h3>
+                    <p>Rich Belgian chocolate drink</p>
+                    <div class="item-footer">
+                        <span class="price">₹180</span>
+                        <span class="badge hot">Hot</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="beverages">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&q=80" alt="Fresh Orange Juice">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Fresh Orange Juice', 180, 'beverages')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -198,8 +351,25 @@
 
             <div class="menu-item" data-category="beverages">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&q=80" alt="Smoothie">
-                    <button class="add-to-cart" onclick="addToCart('Berry Smoothie', 280)">
+                    <img src="https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400&q=80" alt="Mango Lassi">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Mango Lassi', 160, 'beverages')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Mango Lassi</h3>
+                    <p>Creamy mango yogurt drink</p>
+                    <div class="item-footer">
+                        <span class="price">₹160</span>
+                        <span class="badge cold">Cold</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="beverages">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&q=80" alt="Berry Smoothie">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Berry Smoothie', 280, 'beverages')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -213,11 +383,45 @@
                 </div>
             </div>
 
+            <div class="menu-item" data-category="beverages">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=400&q=80" alt="Lemonade">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Fresh Lemonade', 140, 'beverages')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Fresh Lemonade</h3>
+                    <p>Tangy and refreshing</p>
+                    <div class="item-footer">
+                        <span class="price">₹140</span>
+                        <span class="badge cold">Cold</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="beverages">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80" alt="Mojito">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Virgin Mojito', 220, 'beverages')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Virgin Mojito</h3>
+                    <p>Minty lime refresher</p>
+                    <div class="item-footer">
+                        <span class="price">₹220</span>
+                        <span class="badge cold">Cold</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Food Items -->
             <div class="menu-item" data-category="food">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&q=80" alt="Croissant">
-                    <button class="add-to-cart" onclick="addToCart('Butter Croissant', 120)">
+                    <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&q=80" alt="Croissant">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Butter Croissant', 120, 'food')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -233,8 +437,8 @@
 
             <div class="menu-item" data-category="food">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&q=80" alt="Sandwich">
-                    <button class="add-to-cart" onclick="addToCart('Club Sandwich', 350)">
+                    <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&q=80" alt="Club Sandwich">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Club Sandwich', 350, 'food')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -250,8 +454,25 @@
 
             <div class="menu-item" data-category="food">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=400&q=80" alt="Pasta">
-                    <button class="add-to-cart" onclick="addToCart('Penne Alfredo', 420)">
+                    <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80" alt="Grilled Cheese">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Grilled Cheese Sandwich', 280, 'food')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Grilled Cheese Sandwich</h3>
+                    <p>Melted cheese perfection</p>
+                    <div class="item-footer">
+                        <span class="price">₹280</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="food">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1603064752734-4c48eff53d05?w=400&q=80" alt="Pasta">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Penne Alfredo', 420, 'food')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -267,8 +488,42 @@
 
             <div class="menu-item" data-category="food">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="Salad">
-                    <button class="add-to-cart" onclick="addToCart('Caesar Salad', 320)">
+                    <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80" alt="Pesto Pasta">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Pesto Pasta', 380, 'food')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Pesto Pasta</h3>
+                    <p>Fresh basil pesto delight</p>
+                    <div class="item-footer">
+                        <span class="price">₹380</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="food">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="Burger">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Classic Burger', 380, 'food')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Classic Burger</h3>
+                    <p>Juicy beef patty with cheese</p>
+                    <div class="item-footer">
+                        <span class="price">₹380</span>
+                        <span class="badge">Non-Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="food">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="Caesar Salad">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Caesar Salad', 320, 'food')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -282,11 +537,62 @@
                 </div>
             </div>
 
+            <div class="menu-item" data-category="food">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80" alt="Pizza">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Margherita Pizza', 450, 'food')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Margherita Pizza</h3>
+                    <p>Classic tomato & mozzarella</p>
+                    <div class="item-footer">
+                        <span class="price">₹450</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="food">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80" alt="Pepperoni Pizza">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Pepperoni Pizza', 520, 'food')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Pepperoni Pizza</h3>
+                    <p>Loaded with pepperoni</p>
+                    <div class="item-footer">
+                        <span class="price">₹520</span>
+                        <span class="badge">Non-Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="food">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80" alt="Paneer Tikka Wrap">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Paneer Tikka Wrap', 340, 'food')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Paneer Tikka Wrap</h3>
+                    <p>Spiced cottage cheese wrap</p>
+                    <div class="item-footer">
+                        <span class="price">₹340</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Desserts -->
             <div class="menu-item" data-category="desserts">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&q=80" alt="Cheesecake">
-                    <button class="add-to-cart" onclick="addToCart('NY Cheesecake', 280)">
+                    <img src="https://images.unsplash.com/photo-1533134486753-c833f0ed4866?w=400&q=80" alt="Cheesecake">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('NY Cheesecake', 280, 'desserts')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -303,7 +609,7 @@
             <div class="menu-item" data-category="desserts">
                 <div class="item-image">
                     <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&q=80" alt="Brownie">
-                    <button class="add-to-cart" onclick="addToCart('Chocolate Brownie', 220)">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Chocolate Brownie', 220, 'desserts')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -319,8 +625,8 @@
 
             <div class="menu-item" data-category="desserts">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80" alt="Tiramisu">
-                    <button class="add-to-cart" onclick="addToCart('Tiramisu', 320)">
+                    <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&q=80" alt="Tiramisu">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Tiramisu', 320, 'desserts')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -336,8 +642,8 @@
 
             <div class="menu-item" data-category="desserts">
                 <div class="item-image">
-                    <img src="https://images.unsplash.com/photo-1497534547324-0ebb3f052e88?w=400&q=80" alt="Ice Cream">
-                    <button class="add-to-cart" onclick="addToCart('Vanilla Ice Cream', 180)">
+                    <img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400&q=80" alt="Ice Cream">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Vanilla Ice Cream', 180, 'desserts')">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -346,6 +652,108 @@
                     <p>Premium handcrafted scoop</p>
                     <div class="item-footer">
                         <span class="price">₹180</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="desserts">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80" alt="Apple Pie">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Apple Pie', 250, 'desserts')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Apple Pie</h3>
+                    <p>Warm cinnamon apple filling</p>
+                    <div class="item-footer">
+                        <span class="price">₹250</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="desserts">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1616690710400-a16d146927c5?w=400&q=80" alt="Red Velvet Cake">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Red Velvet Cake', 300, 'desserts')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Red Velvet Cake</h3>
+                    <p>Moist layers with cream cheese</p>
+                    <div class="item-footer">
+                        <span class="price">₹300</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="desserts">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1514849302-984523450cf4?w=400&q=80" alt="Chocolate Mousse">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Chocolate Mousse', 260, 'desserts')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Chocolate Mousse</h3>
+                    <p>Light & airy chocolate dream</p>
+                    <div class="item-footer">
+                        <span class="price">₹260</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="desserts">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80" alt="Lava Cake">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Choco Lava Cake', 280, 'desserts')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Choco Lava Cake</h3>
+                    <p>Molten chocolate center</p>
+                    <div class="item-footer">
+                        <span class="price">₹280</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="desserts">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400&q=80" alt="Panna Cotta">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Panna Cotta', 240, 'desserts')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Panna Cotta</h3>
+                    <p>Italian cream dessert</p>
+                    <div class="item-footer">
+                        <span class="price">₹240</span>
+                        <span class="badge veg">Veg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="desserts">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=400&q=80" alt="Fruit Tart">
+                    <button class="add-to-cart" onclick="cartManager.addToCart('Fresh Fruit Tart', 290, 'desserts')">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <h3>Fresh Fruit Tart</h3>
+                    <p>Seasonal fruits on pastry</p>
+                    <div class="item-footer">
+                        <span class="price">₹290</span>
                         <span class="badge veg">Veg</span>
                     </div>
                 </div>
