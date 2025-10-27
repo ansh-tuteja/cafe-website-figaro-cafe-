@@ -20,9 +20,13 @@ class CartManager {
     // Initialize cart
     async init() {
         console.log('Cart Manager initializing...');
-        await this.loadCart();
-        this.updateCartUI();
-        console.log('Cart Manager initialized. Items:', this.cart.items.length);
+        try {
+            await this.loadCart();
+            this.updateCartUI();
+            console.log('Cart Manager initialized. Items:', this.cart.items.length);
+        } catch (error) {
+            console.error('Cart initialization error:', error);
+        }
     }
 
     // Load cart from server
@@ -390,6 +394,9 @@ class CartManager {
 
 // Initialize cart manager
 const cartManager = new CartManager();
+
+// Make it globally available
+window.cartManager = cartManager;
 
 // Global function for easy access from HTML
 function addToCart(itemName, price, category, image) {
