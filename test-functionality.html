@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functionality Test - Figaro Cafe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #B8905F;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #FFF8F0;
+            border-radius: 8px;
+        }
+        
+        h2 {
+            color: #1A1A1A;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #B8905F;
+            padding-bottom: 10px;
+        }
+        
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .test-result.pass {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        
+        .test-result.fail {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .test-result.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        button {
+            background: #B8905F;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background: #9d7a4d;
+        }
+        
+        .test-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .status-badge.success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .status-badge.error {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1><i class="fas fa-flask"></i> Figaro Café Functionality Test Suite</h1>
+        
+        <div class="test-section">
+            <h2>1. LocalStorage Tests</h2>
+            <div id="storage-tests"></div>
+            <div class="test-actions">
+                <button onclick="testLocalStorage()">Run Storage Tests</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. Cart Functionality Tests</h2>
+            <div id="cart-tests"></div>
+            <div class="test-actions">
+                <button onclick="testCartFunctions()">Test Cart Operations</button>
+                <button onclick="testCartPersistence()">Test Cart Persistence</button>
+                <button onclick="clearCart()">Clear Cart</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. Login State Tests</h2>
+            <div id="login-tests"></div>
+            <div class="test-actions">
+                <button onclick="testLoginState()">Test Login State</button>
+                <button onclick="simulateLogin()">Simulate Login</button>
+                <button onclick="simulateLogout()">Simulate Logout</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>4. Error Handling Tests</h2>
+            <div id="error-tests"></div>
+            <div class="test-actions">
+                <button onclick="testErrorHandling()">Test Error Handling</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>5. UI Update Tests</h2>
+            <div id="ui-tests"></div>
+            <div class="test-actions">
+                <button onclick="testUIUpdates()">Test UI Updates</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Test Summary</h2>
+            <div id="summary"></div>
+        </div>
+    </div>
+
+    <script>
+        let testResults = {
+            passed: 0,
+            failed: 0,
+            total: 0
+        };
+
+        function logTest(section, message, status) {
+            const div = document.getElementById(section);
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${status}`;
+            resultDiv.innerHTML = `<strong>${status.toUpperCase()}:</strong> ${message}`;
+            div.appendChild(resultDiv);
+            
+            testResults.total++;
+            if (status === 'pass') testResults.passed++;
+            else if (status === 'fail') testResults.failed++;
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const summary = document.getElementById('summary');
+            summary.innerHTML = `
+                <p><strong>Total Tests:</strong> ${testResults.total}</p>
+                <p><span class="status-badge success">Passed: ${testResults.passed}</span></p>
+                <p><span class="status-badge error">Failed: ${testResults.failed}</span></p>
+            `;
+        }
+
+        // Test 1: LocalStorage
+        function testLocalStorage() {
+            document.getElementById('storage-tests').innerHTML = '';
+            
+            try {
+                // Test write
+                localStorage.setItem('test_key', 'test_value');
+                logTest('storage-tests', 'localStorage write capability', 'pass');
+                
+                // Test read
+                const value = localStorage.getItem('test_key');
+                if (value === 'test_value') {
+                    logTest('storage-tests', 'localStorage read capability', 'pass');
+                } else {
+                    logTest('storage-tests', 'localStorage read returned incorrect value', 'fail');
+                }
+                
+                // Test delete
+                localStorage.removeItem('test_key');
+                if (!localStorage.getItem('test_key')) {
+                    logTest('storage-tests', 'localStorage delete capability', 'pass');
+                } else {
+                    logTest('storage-tests', 'localStorage delete failed', 'fail');
+                }
+                
+                // Check Figaro keys
+                const sessionId = localStorage.getItem('figaro_session_id');
+                logTest('storage-tests', `Session ID ${sessionId ? 'exists' : 'not found'}: ${sessionId || 'N/A'}`, sessionId ? 'pass' : 'info');
+                
+                const cart = localStorage.getItem('figaro_cart');
+                logTest('storage-tests', `Cart data ${cart ? 'exists' : 'not found'}`, cart ? 'pass' : 'info');
+                
+                const user = localStorage.getItem('figaro_user');
+                logTest('storage-tests', `User data ${user ? 'exists' : 'not found'}`, user ? 'info' : 'info');
+                
+            } catch (error) {
+                logTest('storage-tests', `localStorage error: ${error.message}`, 'fail');
+            }
+        }
+
+        // Test 2: Cart Functions
+        function testCartFunctions() {
+            document.getElementById('cart-tests').innerHTML = '';
+            
+            try {
+                // Create test cart
+                const testCart = {
+                    items: [
+                        { name: 'Test Coffee', price: 200, quantity: 1, category: 'coffee' },
+                        { name: 'Test Pastry', price: 150, quantity: 2, category: 'food' }
+                    ]
+                };
+                
+                localStorage.setItem('figaro_cart', JSON.stringify(testCart));
+                logTest('cart-tests', 'Cart saved to localStorage', 'pass');
+                
+                // Test cart retrieval
+                const savedCart = JSON.parse(localStorage.getItem('figaro_cart'));
+                if (savedCart && savedCart.items.length === 2) {
+                    logTest('cart-tests', `Cart retrieved with ${savedCart.items.length} items`, 'pass');
+                } else {
+                    logTest('cart-tests', 'Cart retrieval failed', 'fail');
+                }
+                
+                // Test cart calculations
+                const total = savedCart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const expectedTotal = 200 * 1 + 150 * 2;
+                if (total === expectedTotal) {
+                    logTest('cart-tests', `Cart total calculated correctly: ₹${total}`, 'pass');
+                } else {
+                    logTest('cart-tests', `Cart total incorrect: expected ₹${expectedTotal}, got ₹${total}`, 'fail');
+                }
+                
+                // Test item count
+                const itemCount = savedCart.items.reduce((count, item) => count + item.quantity, 0);
+                if (itemCount === 3) {
+                    logTest('cart-tests', `Item count correct: ${itemCount} items`, 'pass');
+                } else {
+                    logTest('cart-tests', `Item count incorrect: expected 3, got ${itemCount}`, 'fail');
+                }
+                
+            } catch (error) {
+                logTest('cart-tests', `Cart test error: ${error.message}`, 'fail');
+            }
+        }
+
+        function testCartPersistence() {
+            document.getElementById('cart-tests').innerHTML = '';
+            
+            logTest('cart-tests', 'Testing cart persistence across page reload...', 'info');
+            logTest('cart-tests', 'Add items to cart, then reload page to verify persistence', 'info');
+            
+            const cart = localStorage.getItem('figaro_cart');
+            if (cart) {
+                const cartData = JSON.parse(cart);
+                logTest('cart-tests', `Cart persists with ${cartData.items ? cartData.items.length : 0} items`, 'pass');
+            } else {
+                logTest('cart-tests', 'No cart data found in localStorage', 'info');
+            }
+        }
+
+        function clearCart() {
+            localStorage.removeItem('figaro_cart');
+            logTest('cart-tests', 'Cart cleared from localStorage', 'pass');
+        }
+
+        // Test 3: Login State
+        function testLoginState() {
+            document.getElementById('login-tests').innerHTML = '';
+            
+            const user = localStorage.getItem('figaro_user');
+            if (user) {
+                try {
+                    const userData = JSON.parse(user);
+                    logTest('login-tests', `User logged in: ${userData.name || 'Unknown'}`, 'pass');
+                    logTest('login-tests', `Email: ${userData.email || 'N/A'}`, 'info');
+                    
+                    const token = localStorage.getItem('figaro_token');
+                    logTest('login-tests', `Auth token ${token ? 'exists' : 'missing'}`, token ? 'pass' : 'fail');
+                } catch (error) {
+                    logTest('login-tests', 'User data corrupted', 'fail');
+                }
+            } else {
+                logTest('login-tests', 'No user logged in', 'info');
+            }
+        }
+
+        function simulateLogin() {
+            const testUser = {
+                name: 'Test User',
+                email: 'test@figaro.com',
+                id: 'test123'
+            };
+            
+            localStorage.setItem('figaro_user', JSON.stringify(testUser));
+            localStorage.setItem('figaro_token', 'test_token_' + Date.now());
+            
+            logTest('login-tests', 'Simulated login successful', 'pass');
+            logTest('login-tests', 'Reload the page to see welcome message in navbar', 'info');
+        }
+
+        function simulateLogout() {
+            localStorage.removeItem('figaro_user');
+            localStorage.removeItem('figaro_token');
+            
+            logTest('login-tests', 'Simulated logout successful', 'pass');
+            logTest('login-tests', 'Reload the page to see login button restored', 'info');
+        }
+
+        // Test 4: Error Handling
+        function testErrorHandling() {
+            document.getElementById('error-tests').innerHTML = '';
+            
+            // Test invalid cart data
+            try {
+                localStorage.setItem('figaro_cart', 'invalid json');
+                const cart = localStorage.getItem('figaro_cart');
+                JSON.parse(cart);
+                logTest('error-tests', 'Invalid JSON should throw error', 'fail');
+            } catch (error) {
+                logTest('error-tests', 'Invalid JSON caught correctly', 'pass');
+                localStorage.removeItem('figaro_cart');
+            }
+            
+            // Test null handling
+            try {
+                const nullValue = null;
+                const parsed = JSON.parse(localStorage.getItem('nonexistent_key') || 'null');
+                if (parsed === null) {
+                    logTest('error-tests', 'Null value handled correctly', 'pass');
+                }
+            } catch (error) {
+                logTest('error-tests', 'Null handling failed', 'fail');
+            }
+            
+            // Test empty cart
+            try {
+                const emptyCart = { items: [] };
+                if (emptyCart.items.length === 0) {
+                    logTest('error-tests', 'Empty cart detected correctly', 'pass');
+                }
+            } catch (error) {
+                logTest('error-tests', 'Empty cart check failed', 'fail');
+            }
+        }
+
+        // Test 5: UI Updates
+        function testUIUpdates() {
+            document.getElementById('ui-tests').innerHTML = '';
+            
+            logTest('ui-tests', 'Check if cart count badge updates when items are added', 'info');
+            logTest('ui-tests', 'Check if welcome message appears when user logs in', 'info');
+            logTest('ui-tests', 'Check if notifications appear when adding items', 'info');
+            logTest('ui-tests', 'Navigate to /pages/menu.html to test live functionality', 'info');
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            logTest('summary', 'Test suite loaded successfully', 'info');
+        });
+    </script>
+</body>
+</html>

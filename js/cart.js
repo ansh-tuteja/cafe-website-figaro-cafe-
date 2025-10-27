@@ -33,10 +33,29 @@ class CartManager {
             if (data.success) {
                 this.cart = data.cart;
                 console.log('Cart loaded from server:', this.cart);
+                // Sync to localStorage as backup
+                this.saveToLocalStorage();
             }
         } catch (error) {
             console.log('Backend not available, using localStorage');
             // Fallback to localStorage
+            this.loadFromLocalStorage();
+        }
+    }
+
+    // Save cart to localStorage with error handling
+    saveToLocalStorage() {
+        try {
+            localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+        } catch (error) {
+            console.error('Failed to save cart to localStorage:', error);
+            this.showNotification('Unable to save cart. Storage may be full.', 'error');
+        }
+    }
+
+    // Load cart from localStorage with error handling
+    loadFromLocalStorage() {
+        try {
             const savedCart = localStorage.getItem('figaro_cart');
             if (savedCart) {
                 this.cart = JSON.parse(savedCart);
@@ -45,6 +64,10 @@ class CartManager {
                 this.cart = { items: [] };
                 console.log('Starting with empty cart');
             }
+        } catch (error) {
+            console.error('Failed to load cart from localStorage:', error);
+            this.cart = { items: [] };
+            this.showNotification('Unable to load saved cart.', 'error');
         }
     }
 
@@ -52,9 +75,20 @@ class CartManager {
     async addToCart(itemName, price, category = 'general', image = '') {
         console.log('Adding to cart:', itemName, price, category);
         
+        // Validate inputs
+        if (!itemName || !price) {
+            this.showNotification('Invalid item details', 'error');
+            return;
+        }
+
+        if (isNaN(price) || price <= 0) {
+            this.showNotification('Invalid price', 'error');
+            return;
+        }
+        
         const item = {
             name: itemName,
-            price: price,
+            price: parseFloat(price),
             quantity: 1,
             category: category,
             image: image
@@ -74,73 +108,97 @@ class CartManager {
             if (data.success) {
                 this.cart = data.cart;
                 this.updateCartUI();
-                this.showNotification(`${itemName} added to cart!`, 'success');
-                localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+                this.showNotification(`✓ ${itemName} added to cart!`, 'success');
+                this.saveToLocalStorage();
             }
         } catch (error) {
-            console.error('Error adding to cart:', error);
+            console.log('Using local cart (backend unavailable)');
             this.addToCartLocally(item);
         }
     }
 
     // Fallback: Add to cart locally
     addToCartLocally(item) {
-        const existingItemIndex = this.cart.items.findIndex(i => i.name === item.name);
-        
-        if (existingItemIndex > -1) {
-            this.cart.items[existingItemIndex].quantity += 1;
-        } else {
-            this.cart.items.push(item);
+        try {
+            const existingItemIndex = this.cart.items.findIndex(i => i.name === item.name);
+            
+            if (existingItemIndex > -1) {
+                this.cart.items[existingItemIndex].quantity += 1;
+            } else {
+                this.cart.items.push(item);
+            }
+            
+            this.saveToLocalStorage();
+            this.updateCartUI();
+            this.showNotification(`✓ ${item.name} added to cart!`, 'success');
+        } catch (error) {
+            console.error('Failed to add item locally:', error);
+            this.showNotification('Failed to add item to cart', 'error');
         }
-        
-        localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
-        this.updateCartUI();
-        this.showNotification(`${item.name} added to cart!`, 'success');
     }
 
     // Update item quantity
     async updateQuantity(itemName, change) {
-        const itemIndex = this.cart.items.findIndex(i => i.name === itemName);
-        if (itemIndex === -1) return;
-
-        const newQuantity = this.cart.items[itemIndex].quantity + change;
-
         try {
-            const response = await fetch(`${this.API_BASE}/cart/update`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    sessionId: this.sessionId,
-                    itemName: itemName,
-                    quantity: newQuantity
-                })
-            });
+            const itemIndex = this.cart.items.findIndex(i => i.name === itemName);
+            if (itemIndex === -1) {
+                this.showNotification('Item not found in cart', 'error');
+                return;
+            }
 
-            const data = await response.json();
-            if (data.success) {
-                this.cart = data.cart;
-                this.updateCartUI();
-                localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
+            const newQuantity = this.cart.items[itemIndex].quantity + change;
+
+            // Don't allow quantity less than 1
+            if (newQuantity < 1) {
+                this.removeItem(itemName);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${this.API_BASE}/cart/update`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sessionId: this.sessionId,
+                        itemName: itemName,
+                        quantity: newQuantity
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    this.cart = data.cart;
+                    this.updateCartUI();
+                    this.saveToLocalStorage();
+                }
+            } catch (error) {
+                console.log('Using local cart update');
+                this.updateQuantityLocally(itemName, change);
             }
         } catch (error) {
-            console.error('Error updating quantity:', error);
-            this.updateQuantityLocally(itemName, change);
+            console.error('Failed to update quantity:', error);
+            this.showNotification('Failed to update quantity', 'error');
         }
     }
 
     // Fallback: Update quantity locally
     updateQuantityLocally(itemName, change) {
-        const itemIndex = this.cart.items.findIndex(i => i.name === itemName);
-        if (itemIndex === -1) return;
+        try {
+            const itemIndex = this.cart.items.findIndex(i => i.name === itemName);
+            if (itemIndex === -1) return;
 
-        this.cart.items[itemIndex].quantity += change;
-        
-        if (this.cart.items[itemIndex].quantity <= 0) {
-            this.cart.items.splice(itemIndex, 1);
+            this.cart.items[itemIndex].quantity += change;
+            
+            if (this.cart.items[itemIndex].quantity <= 0) {
+                this.cart.items.splice(itemIndex, 1);
+            }
+            
+            this.saveToLocalStorage();
+            this.updateCartUI();
+        } catch (error) {
+            console.error('Failed to update quantity locally:', error);
+            this.showNotification('Failed to update quantity', 'error');
         }
-        
-        localStorage.setItem('figaro_cart', JSON.stringify(this.cart));
-        this.updateCartUI();
     }
 
     // Remove item from cart
@@ -266,18 +324,32 @@ class CartManager {
 
     // Show notification
     showNotification(message, type = 'success') {
+        // Remove any existing notifications first
+        const existingNotifications = document.querySelectorAll('.cart-notification');
+        existingNotifications.forEach(notif => notif.remove());
+
         const notification = document.createElement('div');
         notification.className = `cart-notification ${type}`;
-        notification.textContent = message;
+        
+        // Add icon based on type
+        const icon = type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ';
+        notification.innerHTML = `<span class="notif-icon">${icon}</span> ${message}`;
+        
         document.body.appendChild(notification);
 
+        // Trigger animation
         setTimeout(() => {
             notification.classList.add('show');
         }, 10);
 
+        // Remove after 3 seconds
         setTimeout(() => {
             notification.classList.remove('show');
-            setTimeout(() => notification.remove(), 300);
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
         }, 3000);
     }
 
