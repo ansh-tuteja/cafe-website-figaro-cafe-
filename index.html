@@ -41,7 +41,13 @@
             </div>
             
             <div class="nav-right">
-                <a href="pages/auth.html" class="nav-link"><i class="fas fa-user"></i> Login</a>
+                <span id="user-welcome" style="display: none; margin-right: 15px; color: #B8905F; font-weight: 500;">
+                    <i class="fas fa-coffee"></i> Welcome, <span id="username"></span>!
+                </span>
+                <a href="pages/auth.html" id="login-link" class="nav-link"><i class="fas fa-user"></i> Login</a>
+                <button id="logout-btn" class="nav-link" style="display: none; background: none; border: none; cursor: pointer; color: inherit; font-size: inherit; font-family: inherit;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
                 <a href="pages/reservation.html" class="reservation-btn">Reservation</a>
             </div>
         </div>

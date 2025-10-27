@@ -19,8 +19,10 @@ class CartManager {
 
     // Initialize cart
     async init() {
+        console.log('Cart Manager initializing...');
         await this.loadCart();
         this.updateCartUI();
+        console.log('Cart Manager initialized. Items:', this.cart.items.length);
     }
 
     // Load cart from server
@@ -30,19 +32,26 @@ class CartManager {
             const data = await response.json();
             if (data.success) {
                 this.cart = data.cart;
+                console.log('Cart loaded from server:', this.cart);
             }
         } catch (error) {
-            console.error('Error loading cart:', error);
+            console.log('Backend not available, using localStorage');
             // Fallback to localStorage
             const savedCart = localStorage.getItem('figaro_cart');
             if (savedCart) {
                 this.cart = JSON.parse(savedCart);
+                console.log('Cart loaded from localStorage:', this.cart);
+            } else {
+                this.cart = { items: [] };
+                console.log('Starting with empty cart');
             }
         }
     }
 
     // Add item to cart
     async addToCart(itemName, price, category = 'general', image = '') {
+        console.log('Adding to cart:', itemName, price, category);
+        
         const item = {
             name: itemName,
             price: price,
