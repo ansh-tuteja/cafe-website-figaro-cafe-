@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/menu-page.css">
     <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="../css/toast.css">
     <link rel="stylesheet" href="../css/animations.css">
 </head>
 <body>
@@ -862,6 +863,7 @@
     <div class="cart-modal-overlay" onclick="toggleCartModal()"></div>
 
     <script src="../js/animations.js"></script>
+    <script src="../js/toast.js"></script>
     <script src="../js/cart.js"></script>
     <script src="../js/menu.js"></script>
     
@@ -889,11 +891,12 @@
         }
         
         // Logout functionality
-        document.getElementById('logout-btn').addEventListener('click', function() {
-            localStorage.removeItem('figaro_user');
-            localStorage.removeItem('figaro_token');
-            alert('Logged out successfully! ☕');
-            updateNavbar();
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            handleLogout({
+                position: 'top-right',
+                redirectUrl: '../index.html'
+            });
         });
         
         // Update navbar on page load

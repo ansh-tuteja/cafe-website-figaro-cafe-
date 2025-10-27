@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/toast.css">
     <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
@@ -230,6 +231,7 @@
 
     <!-- Scripts -->
     <script src="js/carousel.js"></script>
+    <script src="js/toast.js"></script>
     <script src="js/animations.js"></script>
     
     <script>
@@ -256,11 +258,12 @@
         }
         
         // Logout functionality
-        document.getElementById('logout-btn').addEventListener('click', function() {
-            localStorage.removeItem('figaro_user');
-            localStorage.removeItem('figaro_token');
-            alert('Logged out successfully! ☕');
-            updateNavbar();
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            handleLogout({
+                position: 'top-right',
+                redirectUrl: 'index.html'
+            });
         });
         
         // Update navbar on page load
