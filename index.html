@@ -231,5 +231,40 @@
     <!-- Scripts -->
     <script src="js/carousel.js"></script>
     <script src="js/animations.js"></script>
+    
+    <script>
+        // Check login status and update navbar
+        function updateNavbar() {
+            const user = JSON.parse(localStorage.getItem('figaro_user') || 'null');
+            const welcomeMsg = document.getElementById('user-welcome');
+            const usernameSpan = document.getElementById('username');
+            const loginLink = document.getElementById('login-link');
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            if (user && user.name) {
+                // User is logged in
+                welcomeMsg.style.display = 'inline';
+                usernameSpan.textContent = user.name;
+                loginLink.style.display = 'none';
+                logoutBtn.style.display = 'inline';
+            } else {
+                // User is not logged in
+                welcomeMsg.style.display = 'none';
+                loginLink.style.display = 'inline';
+                logoutBtn.style.display = 'none';
+            }
+        }
+        
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('figaro_user');
+            localStorage.removeItem('figaro_token');
+            alert('Logged out successfully! ☕');
+            updateNavbar();
+        });
+        
+        // Update navbar on page load
+        updateNavbar();
+    </script>
 </body>
 </html>
