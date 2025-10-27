@@ -93,4 +93,3 @@ function checkout() {
         alert('An error occurred. Please refresh the page and try again.');
     }
 }
-}
